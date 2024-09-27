@@ -51,7 +51,7 @@ router.patch("/update/:id", auth, checkAccess(ROLES.author), async (req, res) =>
 })
 
 // 4. Delete a blog (author their own blog/admin)
-router.delete("/delete/:id", auth, checkAccess(ROLES.admin), async (req, res) => {
+router.delete("/delete/:id", auth, checkAccess(ROLES.author), async (req, res) => {
     try {
         const blogId = req.params.id;
         const blog = await Blog.findById(blogId);
@@ -62,12 +62,12 @@ router.delete("/delete/:id", auth, checkAccess(ROLES.admin), async (req, res) =>
         }
 
         // When user is trying to delete someone else's blog
-        if (!blog.author.toString() !== req.user._id.toString()) {
+        if (blog.author.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Access Denied!" })
         }
 
         await Blog.findByIdAndDelete(blogId)
-        res.json(updatedBlog)
+        res.json({ message: "Deleted successfully!" })
     } catch (err) {
         res.status(400).send(err)
     }
