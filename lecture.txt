@@ -1,0 +1,13 @@
+User route -> 
+1. Register (post)
+2. Login (post)
+3. Get all users (get)
+4. Single user (Delete)
+5. Logout
+
+
+Blog route -> 
+1. Get all blogs (everyone) -> no need of authentication/login
+2. Create a new blog (author) -> yes authentication is required
+3. Edit a blog (author their own blog/admin)
+4. Delete a blog (author their own blog/admin)
